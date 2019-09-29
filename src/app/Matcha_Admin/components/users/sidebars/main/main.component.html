@@ -1,0 +1,44 @@
+<div class="sidebar-content">
+
+    <div class="card">
+
+        <!-- SIDEBAR HEADER -->
+        <!--<div class="header p-24" fxLayout="row" fxLayoutAlign="start center">-->
+
+            <!--&lt;!&ndash; USER &ndash;&gt;-->
+            <!--<img [src]="currentUser.avatar" class="avatar mr-16" [alt]="currentUser.name"/>-->
+            <!--<span class="h5">{{currentUser.name}}</span>-->
+            <!--&lt;!&ndash; / USER &ndash;&gt;-->
+        <!--</div>-->
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content py-16" fusePerfectScrollbar>
+
+            <div class="nav material2">
+                <div class="nav-item" aria-label="inbox">
+                    <a class="nav-link" matRipple (click)="changeFilter('all')"
+                       [ngClass]="{'active accent':filterBy ==='all'}">
+                        <span class="title">All Users</span>
+                    </a>
+                </div>
+
+                <div class="nav-item" *ngFor="let role of userRoles" aria-label="role" (click)="changeFilter(role.name)">
+                    <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy === role.name }">
+                        <div class="title">{{role.name}}</div>
+                    </a>
+                </div>
+
+                <!--<div class="nav-item" aria-label="starred" (click)="changeFilter('starred')">-->
+                    <!--<a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='starred'}">-->
+                        <!--<div class="title">Starred Users</div>-->
+                    <!--</a>-->
+                <!--</div>-->
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,171 @@
+<div class="page-layout carded left-sidebar">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent1"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header accent1" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <!--<button *ngIf="iam(['admin', 'Admin'])" mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/users'">-->
+          <!--<mat-icon>arrow_back</mat-icon>-->
+        <!--</button>-->
+
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="h2">
+            <span *ngIf="!user.id">New User</span>
+            <span *ngIf="user.id">Detail User</span>
+          </div>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <button *ngIf="!user.id" mat-raised-button
+              class="save-user-button"
+              [disabled]="profileForm.invalid"
+              (click)="addUser()">
+        <span>ADD</span>
+      </button>
+
+      <button *ngIf="user.id" mat-raised-button
+              class="save-user-button"
+              [disabled]="profileForm.invalid || profileForm.pristine"
+              (click)="updateUser()">
+        <span>SAVE</span>
+      </button>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+      <!--<div class="toolbar px-24 py-8">-->
+      <!--</div>-->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fusePerfectScrollbar>
+        <form name="profileForm" [formGroup]="profileForm" class="user w-100-p" fxLayout="column" fxFlex>
+          <mat-tab-group>
+            <mat-tab label="Basic Info">
+              <div class="tab-content p-24" fusePerfectScrollbar>
+                <div fxLayout="row wrap" fxLayoutAlign="center">
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>Username</mat-label>
+                      <input matInput placeholder="Username" name="username" formControlName="username"
+                             required>
+                      <mat-error>
+                        Username is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>Email</mat-label>
+                      <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                      <input name="email" formControlName="email" matInput type="email"
+                             placeholder="xxx@xxx.com" required>
+                      <mat-error *ngIf="profileForm.get('email').hasError('required')">
+                        Email is required
+                      </mat-error>
+                      <mat-error *ngIf="profileForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <!--<div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">-->
+                    <!--<mat-form-field appearance="outline" floatLabel="always" class="w-100-p">-->
+                      <!--<mat-label>Password</mat-label>-->
+                      <!--<mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>-->
+                      <!--<input name="password" type="password" formControlName="password" matInput>-->
+                      <!--<mat-error>-->
+                        <!--Password is required-->
+                      <!--</mat-error>-->
+                    <!--</mat-form-field>-->
+                  <!--</div>-->
+
+                  <!--<div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">-->
+                    <!--<mat-form-field appearance="outline" floatLabel="always" class="w-100-p">-->
+                      <!--<mat-label>Password (Confirm)</mat-label>-->
+                      <!--<mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>-->
+                      <!--<input type="password" formControlName="passwordConfirm" matInput>-->
+                      <!--<mat-error *ngIf="profileForm.get('passwordConfirm').hasError('required')">-->
+                        <!--Password confirmation is required-->
+                      <!--</mat-error>-->
+                      <!--<mat-error *ngIf="!profileForm.get('passwordConfirm').hasError('required') &&-->
+                                               <!--profileForm.get('passwordConfirm').hasError('passwordsNotMatching')">-->
+                        <!--Passwords must match-->
+                      <!--</mat-error>-->
+                    <!--</mat-form-field>-->
+                  <!--</div>-->
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>Phone Number</mat-label>
+                      <input name="phone_number" formControlName="phone_number" placeholder="Phone Number"
+                             matInput>
+                      <mat-error>
+                        Phone Number is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>SMS Bot Number</mat-label>
+                      <!--<mat-icon matSuffix class="secondary-text">account_circle</mat-icon>-->
+                      <input name="smsbot_number" formControlName="smsbot_number" placeholder="SMS Bot Number"
+                             matInput>
+                      <mat-error>
+                        SMS Bot Number is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>Store Name</mat-label>
+                      <!--<mat-icon matSuffix class="secondary-text">phone</mat-icon>-->
+                      <input name="store_name" formControlName="store_name" matInput
+                             placeholder="Store Name">
+                      <mat-error>
+                        Store Name is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                      <mat-label>Store Link</mat-label>
+                      <mat-icon matSuffix class="secondary-text">domain</mat-icon>
+                      <input name="store_link" formControlName="store_link" matInput placeholder="Store Link">
+                      <mat-error>
+                        Store Link is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </form>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,104 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent1"></div>
+  <!-- / TOP BACKGROUND -->
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <!--<div class="header accent1 p-16 p-sm-32" fxLayout="column" fxLayoutAlign="start"-->
+         <!--fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">-->
+      <!--&lt;!&ndash;<h2 class="m-0">Properties</h2>&ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; / CONTENT HEADER &ndash;&gt;-->
+
+
+    <!-- CONTENT CARD -->
+    <div class="content-card"  style="position:relative">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8" style="z-index: 300;">
+
+        <h2 class="m-0">Cohorts</h2>
+
+      </div>
+
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- Material Design Spinner -->
+      <!--<div class="mat-spinner-wrapper" *ngIf="isLoading">-->
+        <!--<mat-progress-spinner-->
+          <!--class="example-margin"-->
+          <!--mode="indeterminate"-->
+          <!--color="primary">-->
+        <!--</mat-progress-spinner>-->
+      <!--</div>-->
+      <!-- / Material Design Spinner -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fusePerfectScrollbar>
+        <mat-table class="roles-table"
+                   #table [dataSource]="dataSource"
+                   matSort
+                   [@animateStagger]="{value:'50'}"
+                   fusePerfectScrollbar>
+
+          <!-- Cohort Column -->
+          <ng-container matColumnDef="cohorts">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Cohort</mat-header-cell>
+            <mat-cell *matCellDef="let cohort">
+              <p class="text-truncate">{{cohort.group_name}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- population Column -->
+          <ng-container matColumnDef="population">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Population</mat-header-cell>
+            <mat-cell *matCellDef="let cohort" fxHide fxShow.gt-xs>
+              <p class="text-truncate">{{cohort.population}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- status Column -->
+          <ng-container matColumnDef="lastsmsdate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Last Date</mat-header-cell>
+            <mat-cell *matCellDef="let cohort" fxHide fxShow.gt-xs>
+              <p class="text-truncate">{{cohort.sms_body}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Last Message Column -->
+          <ng-container matColumnDef="lastsms">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Last SMS</mat-header-cell>
+            <mat-cell *matCellDef="let cohort">
+              <p class="text-truncate">{{cohort.created_at}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+          <mat-row *matRowDef="let cohort; columns: displayedColumns;"
+                   class="product"
+                   matRipple
+                   [routerLink]="'/admin/permanent-cohorts/' + cohort.group_name + '/detail'"
+                   [@animate]="{value:'*',params:{y:'100%'}}">
+          </mat-row>
+
+        </mat-table>
+        <mat-paginator #paginator [length]="totalCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="onSetPage($event)">
+        </mat-paginator>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

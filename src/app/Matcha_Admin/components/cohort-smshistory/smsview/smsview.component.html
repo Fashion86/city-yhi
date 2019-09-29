@@ -1,0 +1,42 @@
+<div id="smsview" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent1"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-sidenav-container>
+
+        <!-- LEFT SIDENAV -->
+        <!-- <mat-sidenav class="sidenav" position="start" opened="true" mode="side"
+                     fuseMatSidenavHelper="sms-user" matIsLockedOpen="gt-md">
+          <sms-user></sms-user>
+        </mat-sidenav> -->
+        <!-- / LEFT SIDENAV -->
+
+        <mat-tab-group mat-stretch-tabs class="cohort-detail-container">
+          <mat-tab label="Send cohort SMS">
+            <sms-chatbox></sms-chatbox>
+          </mat-tab>
+          <mat-tab label="Numbers in cohort">
+            <app-cohort-numbers></app-cohort-numbers>
+          </mat-tab>
+        </mat-tab-group>
+          
+
+        <!-- / CONTENT -->
+
+      </mat-sidenav-container>
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

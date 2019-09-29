@@ -1,0 +1,195 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- SIDEBAR -->
+  <fuse-sidebar class="sidebar" name="carded-left-sidebar-2" position="left" lockedOpen="gt-md">
+
+    <!-- SIDEBAR HEADER -->
+    <div class="header p-24 accent">
+      <!--<h2 class="m-0">Sidebar header</h2>-->
+    </div>
+
+    <div class="card">
+      <div class="content py-16" fusePerfectScrollbar>
+
+        <div class="nav material2">
+          <div class="nav-item" aria-label="inbox">
+            <a class="nav-link" matRipple (click)="onSelect('role')"
+               [ngClass]="{'active accent':selected ==='role'}">
+              <span class="title">Roles</span>
+            </a>
+            <a class="nav-link" matRipple (click)="onSelect('permission')"
+               [ngClass]="{'active accent':selected ==='permission'}">
+              <span class="title">Permissions</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!--</div>-->
+
+  </fuse-sidebar>
+  <!-- / SIDEBAR -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header accent p-24">
+      <h2 class="m-0">Roles and Permissions</h2>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8">
+
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md
+                (click)="toggleSidebar('carded-left-sidebar-2')">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <button *ngIf="backhandle" mat-icon-button class="sidebar-toggle"
+                [routerLink]="'/admin/roles/role'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+
+        <!--<button *ngIf="backhandle" mat-raised-button-->
+                <!--class="save-role-button"-->
+                <!--[disabled]="roleForm.invalid"-->
+                <!--(click)="addRole()">-->
+          <!--<span>ADD</span>-->
+        <!--</button>-->
+
+        <!--<button *ngIf="backhandle" mat-raised-button-->
+                <!--class="save-role-button"-->
+                <!--[disabled]="roleForm.invalid"-->
+                <!--(click)="updateRole()">-->
+          <!--<span>Save</span>-->
+        <!--</button>-->
+
+
+        <h2 class="m-0">{{pageName}}</h2>
+
+        <!--<button class="ml-sm-32" *ngIf="backhandle" mat-icon-button class="sidebar-toggle" (click)="addRole()"-->
+                <!--fxLayout="row" fxLayoutAlign="end center" fxFlex>-->
+          <!--<span>ADD</span>-->
+        <!--</button>-->
+
+        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="end center" fxFlex>
+          <button mat-raised-button *ngIf="selected =='role'"
+                  [routerLink]="'/admin/roles/role/new'"
+                  class="add-product-button fuse-white mt-24 mt-md-0">
+            <span>ADD NEW ROLE</span>
+          </button>
+          <button mat-raised-button *ngIf="selected =='permission'"
+                  (click)="editPermission()"
+                  class="add-product-button fuse-white mt-24 mt-md-0">
+            <span>ADD NEW PERMISSION</span>
+          </button>
+        </div>
+
+
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fusePerfectScrollbar>
+        <mat-table *ngIf="!backhandle" class="roles-table"
+                   #table [dataSource]="dataSource"
+                   matSort
+                   [@animateStagger]="{value:'50'}"
+                   fusePerfectScrollbar>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+            <mat-cell *matCellDef="let role">
+              <p class="text-truncate">{{role.id}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let role">
+              <p class="text-truncate">{{role.name}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- guard_name Column -->
+          <ng-container matColumnDef="guard_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Guard Name</mat-header-cell>
+            <mat-cell *matCellDef="let role">
+              <p class="text-truncate">{{role.guard_name}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- guard_name Column -->
+          <ng-container matColumnDef="created_at">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Created At</mat-header-cell>
+            <mat-cell *matCellDef="let role" fxHide fxShow.gt-sm>
+              <p class="text-truncate">{{role.created_at}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- updated_at Column -->
+          <ng-container matColumnDef="updated_at">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Updated At</mat-header-cell>
+            <mat-cell *matCellDef="let role" fxHide fxShow.gt-sm>
+              <p class="text-truncate">{{role.updated_at}}</p>
+            </mat-cell>
+          </ng-container>
+
+
+          <!-- Buttons Column -->
+          <ng-container matColumnDef="buttons">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let role">
+              <div fxFlex="row" fxLayoutAlign="end center">
+                <button mat-icon-button (click)="$event.stopPropagation();deleteData(role)"
+                        aria-label="Toggle star">
+                  <mat-icon style="color: red">delete</mat-icon>
+                </button>
+              </div>
+
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+          <mat-row *matRowDef="let role; columns: displayedColumns;"
+                   class="product"
+                   matRipple
+                   (click)="editPermission(role)"
+                   [@animate]="{value:'*',params:{y:'100%'}}">
+          </mat-row>
+
+        </mat-table>
+        <app-role-permission *ngIf="backhandle"></app-role-permission>
+
+        <!--<mat-paginator #paginator-->
+        <!--[length]="dataSource.filteredData.length"-->
+        <!--[pageIndex]="0"-->
+        <!--[pageSize]="10"-->
+        <!--[pageSizeOptions]="[5, 10, 25, 100]">-->
+        <!--</mat-paginator>-->
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

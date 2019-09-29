@@ -1,0 +1,41 @@
+@import "src/@fuse/scss/fuse";
+
+sms-user {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  mat-toolbar {
+
+    .toolbar-bottom {
+      height: 180px;
+    }
+  }
+  .accent1 {
+    background-color: #ffffff !important;
+    color: black !important;
+  }
+  .example-detail-row {
+    height: 0;
+    min-height: 0;
+  }
+
+  .example-header-row .example-element-row:not(.example-expanded-row):hover {
+    background: #777;
+  }
+
+  .example-header-row .example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+
+  .example-element-row .example-cell-row {
+    border-bottom-width: 0;
+  }
+
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+}

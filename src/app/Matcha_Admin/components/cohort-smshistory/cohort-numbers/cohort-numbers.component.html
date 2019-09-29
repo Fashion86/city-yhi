@@ -1,0 +1,70 @@
+<!-- CHAT -->
+<div class="cohort-numbers-container" fxFlex fxLayout="column" style="position:relative">
+
+    <!-- Material Design Spinner -->
+    <div class="mat-spinner-wrapper" *ngIf="isLoading">
+      <mat-progress-spinner
+        class="example-margin"
+        mode="indeterminate"
+        color="primary">
+      </mat-progress-spinner>
+    </div>
+    <!-- / Material Design Spinner -->
+    
+    <!-- CHAT CONTENT -->
+    <div class="content-card"  style="position:relative">
+      
+        <!-- CONTENT -->
+        <div id="cohort-numbers-table-container" class="content p-24" fusePerfectScrollbar>
+          <mat-table class="cohort-numbers"
+                     [dataSource]="dataSource"
+                     matSort
+                     [@animateStagger]="{value:'50'}"
+                     fusePerfectScrollbar>
+  
+            <!-- Cohort Column -->
+            <ng-container matColumnDef="phone">
+              <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+              <mat-cell *matCellDef="let number">
+                <p class="text-truncate">{{number.phone}}</p>
+              </mat-cell>
+            </ng-container>
+  
+            <!-- population Column -->
+            <ng-container matColumnDef="note">
+              <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+              <mat-cell *matCellDef="let number" fxHide fxShow.gt-xs>
+                <p class="text-truncate">{{number.note}}</p>
+              </mat-cell>
+            </ng-container>
+  
+            <!-- status Column -->
+            <ng-container matColumnDef="created_at">
+              <mat-header-cell *matHeaderCellDef>Added date</mat-header-cell>
+              <mat-cell *matCellDef="let number" fxHide fxShow.gt-xs>
+                <p class="text-truncate">{{number.created_at | date:'medium'}}</p>
+              </mat-cell>
+            </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+  
+            <mat-row *matRowDef="let number; columns: displayedColumns;"
+                     class="product"
+                     matRipple
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+            </mat-row>
+  
+          </mat-table>
+          <mat-paginator #paginator [length]="totalCount"
+                         [pageSize]="pageSize"
+                         [pageSizeOptions]="pageSizeOptions"
+                         (page)="onSetPage($event)">
+          </mat-paginator>
+        </div>
+        <!-- / CONTENT -->
+  
+    </div>
+    <!-- / CHAT CONTENT -->
+  
+</div>
+  

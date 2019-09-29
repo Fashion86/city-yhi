@@ -1,0 +1,141 @@
+<!-- SIDENAV HEADER -->
+<div class="sidenav-header">
+
+  <!-- USER TOOLBAR -->
+  <mat-toolbar class="accent1">
+
+    <!-- TOOLBAR BOTTOM -->
+    <mat-toolbar-row class="toolbar-bottom" fxLayout="column" fxLayoutAlign="center center">
+
+      <img src="/assets/images/avatars/profile.jpg" class="avatar user-avatar huge"/>
+      <div class="user-name my-8" *ngIf="user?.first_name">{{user.first_name}} {{user.last_name}}</div>
+    </mat-toolbar-row>
+    <!-- / TOOLBAR BOTTOM -->
+
+  </mat-toolbar>
+  <!-- / USER TOOLBAR -->
+</div>
+
+<!-- SIDENAV CONTENT -->
+<div class="sidenav-content py-32 px-24" fxFlex >
+
+  <!-- USER MOOD -->
+  <div>
+    Phone Number: <span class="text-bold">{{userNumber}}</span>
+  </div>
+  <div>
+    Cohort:
+    <span class="text-bold">
+        {{showCohort()}}
+      </span>
+  </div><br>
+  <div *ngIf="user?.first_name">
+    <div>
+      E-mail: <span class="text-bold">{{user.email}}</span>
+    </div><br>
+    <div>
+      Number of orders: <span class="text-bold">{{user.orders_count}}</span>
+    </div>
+    <div>
+      Last Ordered on: <span class="text-bold">{{user.last_order_date | date:'medium'}}</span>
+    </div>
+    <div>
+      Last Ordered: <span class="text-bold">{{user.last_order_items}}</span>
+    </div><br>
+    <div>
+      LOV: <span class="text-bold">{{user.total_spent}}</span> {{user.currency}}
+    </div>
+    <div>
+      AOV: <span class="text-bold">{{(user.total_spent / user.orders_count).toFixed(2)}}</span> {{user.currency}}
+    </div><br>
+    <div>
+      Billing Address:
+      <span class="text-bold">
+        {{user.default_address.address1}}
+        {{user.default_address.address2}}
+        {{user.default_address.province}}
+        {{user.default_address.city}}
+        {{user.default_address.zip}}
+      </span>
+    </div><br>
+    <div class="text-center">
+      <p class="text-bold">Orders:</p>
+      <mat-table
+        #table [dataSource]="dataSource" multiTemplateDataRows
+      >
+        <ng-container matColumnDef="orderid">
+          <mat-header-cell *matHeaderCellDef style="justify-content: center;" >Order ID</mat-header-cell>
+          <mat-cell *matCellDef="let order" class="example-cell-row" style="justify-content: center;">
+            <p class="text-truncate">{{order.orderNumber}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="orderdate">
+          <mat-header-cell *matHeaderCellDef style="justify-content: center;">Order Date</mat-header-cell>
+          <mat-cell *matCellDef="let order" class="example-cell-row" style="min-width: 100px; justify-content: center;">
+            <p class="text-truncate">{{order.orderDate | date : "dd.MM.y"}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="buttons">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let order">
+            <div fxFlex="row" fxLayoutAlign="end center">
+              <button mat-icon-button
+                      (click)="expandedOrder = expandedOrder === order ? null : order"
+                      aria-label="Expand detail"
+                      class=""
+              >
+                <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let order">
+            <div class="example-element-detail"
+                 [@detailExpand]="order == expandedOrder ? 'expanded' : 'collapsed'">
+              <div *ngIf="order?.orderNumber" style="padding-top: 20px; padding-bottom: 20px;">
+                <div>
+                  <span class="text-center text-bold">Order Number: </span>
+                  <span>{{order.orderNumber}}</span>
+                </div><br>
+                <div>
+                  <span class="text-center text-bold">Order Date: </span>
+                  <span>{{order.orderDate}}</span>
+                </div><br>
+                <div>
+                  <p class="text-center text-bold">Product: </p>
+                  <p *ngFor="let product of order.products; let i = index" class="text-center">{{product}}</p>
+                </div><br>
+                <div>
+                  <span class="text-center text-bold">Cost: </span>
+                  <span>{{order.cost}} {{order.currency}}</span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" class="example-header-row"></mat-header-row>
+        <mat-row *matRowDef="let order; columns: displayedColumns;" class="example-element-row"
+                 [class.example-expanded-row]="expandedOrder === order"
+        >
+        </mat-row>
+        <mat-row
+          *matRowDef="let order; columns: ['expandedDetail']"
+          [class.example-detail-row]="expandedOrder !== order"
+        ></mat-row>
+      </mat-table>
+      <button
+        *ngIf="user.total_order_count > 3"
+        mat-button
+        style="text-decoration: underline"
+        class="px-10 my-20"
+        (click)="goToShopifyOrders()"
+      >
+        Full order history
+      </button>
+    </div>
+  </div>
+  <!-- / USER MOOD -->
+
+</div>

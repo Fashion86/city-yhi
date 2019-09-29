@@ -1,0 +1,96 @@
+<div id="app-users" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
+         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm
+                    (click)="toggleSidebar('app-main')">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+            <div fxLayout="column" fxLayoutAlign="center center"
+                 fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center" style="width: 100%">
+                <div class="logo">
+                    <mat-icon class="logo-icon mr-16"
+                              [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                    </mat-icon>
+                    <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Users
+                    </span>
+                </div>
+
+                <div class="search-wrapper  ml-sm-32 ">
+                    <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon style="color: #039be5!important">search</mat-icon>
+                        <input placeholder="Search for a user" (keydown)="searchUser($event)">
+                    </div>
+                </div>
+
+                <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="end center" fxFlex>
+                    <button mat-raised-button
+                            [routerLink]="'/admin/users/new'"
+                            class="add-product-button fuse-white mt-24 mt-sm-0">
+                        <span>ADD NEW USER</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- / SEARCH -->
+        <!-- ADD BUTTON -->
+
+        <!-- / ADD BUTTON -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- SELECTED BAR -->
+    <app-selected-bar class="accent-600" *ngIf="hasSelectedUsers" [@slideInTop]></app-selected-bar>
+    <!-- / SELECTED BAR -->
+
+    <!-- CONTENT -->
+    <div class="content" style="display: flex">
+
+        <!-- SIDEBAR -->
+        <!--<fuse-sidebar class="sidebar" name="app-main" position="left" lockedOpen="gt-sm">-->
+
+            <!--&lt;!&ndash; SIDEBAR CONTENT &ndash;&gt;-->
+            <!--<div class="content" fusePerfectScrollbar>-->
+                <!--<app-main [@animate]="{value:'*'}"></app-main>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; / SIDEBAR CONTENT &ndash;&gt;-->
+
+        <!--</fuse-sidebar>-->
+        <!-- / SIDEBAR -->
+
+        <!-- CENTER -->
+        <div class="center p-24 pb-56 pr-sm-30" fusePerfectScrollbar>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <app-user-list></app-user-list>
+                <mat-paginator [length]="totalCount"
+                               [pageSize]="pageSize"
+                               [pageSizeOptions]="pageSizeOptions"
+                               (page)="onSetPage($event)">
+                </mat-paginator>
+            </div>
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CENTER -->
+    </div>
+    <!-- / CONTENT-->
+</div>
+
+<!--&lt;!&ndash; ADD User BUTTON &ndash;&gt;-->
+<!--<button mat-fab class="accent" id="add-user-button" (click)="newUser()" aria-label="add user"-->
+<!--[@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">-->
+<!--<mat-icon>person_add</mat-icon>-->
+<!--</button>-->
+<!--&lt;!&ndash; / ADD User BUTTON &ndash;&gt;-->

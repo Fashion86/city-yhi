@@ -1,0 +1,65 @@
+<mat-table #table [dataSource]="dataSource"
+           [@animateStagger]="{value:'50'}">
+
+  <ng-container matColumnDef="avatar">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <img class="avatar" *ngIf="user.avatar" [alt]="user.name"
+           [src]="user.avatar"/>
+      <img class="avatar" *ngIf="!user.avatar" [alt]="user.name"
+           [src]="'assets/images/avatars/profile.jpg'"/>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef>UserName</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <p class="text-truncate font-weight-600">
+        {{user.username}}
+      </p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <p class="email text-truncate">
+        {{user.email}}
+      </p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Buttons Column -->
+  <ng-container matColumnDef="buttons">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <div fxFlex="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="$event.stopPropagation();toggleStar(user, user.id)"
+                aria-label="Toggle star">
+          <mat-icon class="amber-fg" *ngIf="user.active_status==1">check_circle</mat-icon>
+          <mat-icon class="secondary-text" *ngIf="user.active_status==0">block</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="$event.stopPropagation();deleteUser(user)"
+                aria-label="remove">
+          <mat-icon style="color: red">delete</mat-icon>
+        </button>
+
+      </div>
+
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let user; columns: displayedColumns;"
+           class="product"
+           matRipple
+           [@animate]="{value:'*',params:{y:'100%'}}"
+           [routerLink]="'/admin/users/' + user.id + '/detail'">
+  </mat-row>
+</mat-table>
+
+

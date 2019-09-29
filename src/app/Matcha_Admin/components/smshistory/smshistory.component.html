@@ -1,0 +1,133 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent1"></div>
+  <!-- / TOP BACKGROUND -->
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header accent1 p-16 p-sm-32" fxLayout="column" fxLayoutAlign="start"
+         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <!--<h2 class="m-0">Properties</h2>-->
+
+      <!-- SEARCH -->
+      <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+        <div class="search-wrapper mt-16 mt-sm-0">
+          <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon style="color: #039be5!important">search</mat-icon>
+            <input placeholder="Search for a PhoneNumber" (keydown)="searchNumber($event)">
+          </div>
+        </div>
+      </div>
+      <!-- / SEARCH -->
+    </div>
+    <!-- / CONTENT HEADER -->
+
+
+    <!-- CONTENT CARD -->
+    <div class="content-card"  style="position:relative">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8" style="z-index: 300;">
+
+        <h2 class="m-0">SMS Feed</h2>
+
+      </div>
+
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- Material Design Spinner -->
+      <div class="mat-spinner-wrapper" *ngIf="isLoading">
+        <mat-progress-spinner
+          class="example-margin"
+          mode="indeterminate"
+          color="primary">
+        </mat-progress-spinner>
+      </div>
+      <!-- / Material Design Spinner -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fusePerfectScrollbar>
+        <mat-table class="roles-table"
+                   #table [dataSource]="dataSource"
+                   matSort
+                   [@animateStagger]="{value:'50'}"
+                   fusePerfectScrollbar>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef mat-sort-header >Phone</mat-header-cell>
+            <mat-cell *matCellDef="let number" :class="{{number?.support_sms&&number?.is_read===0?'red-300':''}}" style="display:block">
+              <p class="text-truncate">{{number.phone}}</p>
+              <p class="text-truncate">{{number?.support_sms?number.support_sms:number.text}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Time Column -->
+          <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+            <mat-cell *matCellDef="let number">
+              <p class="text-truncate">{{number.last_sms_date | dateAgo}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Cohort Column -->
+          <ng-container matColumnDef="cohort">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Cohort</mat-header-cell>
+            <mat-cell *matCellDef="let number" fxHide fxShow.gt-xs>
+              <p class="text-truncate">{{number?.orderInfo ? 'Purchased' : 'Marketing'}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- LTV Column -->
+          <ng-container matColumnDef="ltv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>LTV</mat-header-cell>
+            <mat-cell *matCellDef="let number" fxHide fxShow.gt-xs>
+              <p class="text-truncate">
+                {{number.orderInfo ? (number.orderInfo.orderPrice/number.orderInfo.orderCount).toFixed(2) + number.orderInfo.orderCurrency : '0 GBP' }}
+              </p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- product Column -->
+          <ng-container matColumnDef="product">
+            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Product</mat-header-cell>
+            <mat-cell *matCellDef="let number" fxHide fxShow.gt-xs>
+              <p class="text-truncate">{{number.orderInfo ? number.orderInfo.orderProduct : ''}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+<!--          <mat-row *matRowDef="let number; columns: displayedColumns;"
+                   class="product"
+                   matRipple
+                   (click)="openNumberDialog(number)"
+                   [@animate]="{value:'*',params:{y:'100%'}}"> -->
+
+          <mat-row *matRowDef="let number; columns: displayedColumns;"
+                   class="product"
+                   matRipple
+                   [routerLink]="'/admin/smshistory/' + number.phone + '/detail'"
+                   [queryParams] = "{ customerId: number.orderInfo ? number.orderInfo.customerId:'' }"
+                   [@animate]="{value:'*',params:{y:'100%'}}">
+          </mat-row>
+
+        </mat-table>
+        <mat-paginator #paginator [length]="totalCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="onSetPage($event)">
+        </mat-paginator>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

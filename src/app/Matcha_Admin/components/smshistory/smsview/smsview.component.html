@@ -1,0 +1,46 @@
+<!--<div mat-dialog-content>-->
+  <div id="smsview" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent1"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+      <!-- CONTENT CARD -->
+      <div class="content-card">
+
+        <mat-sidenav-container>
+
+          <!-- LEFT SIDENAV -->
+          <mat-sidenav class="sidenav" position="start" opened="true" mode="side"
+                      fuseMatSidenavHelper="app-phonelist" matIsLockedOpen="gt-sm">
+            <!--<sms-user [userNumber]=numberInfo.phone [customerId]=customerId></sms-user>-->
+            <app-phonelist></app-phonelist>
+          </mat-sidenav>
+          <!-- / LEFT SIDENAV -->
+
+          <!-- CHAT -->
+          <sms-chatbox></sms-chatbox>
+          <!--<sms-chatbox [customerNumber]=numberInfo.phone [lastSMS]=lastSMS></sms-chatbox>-->
+          <!-- / CHAT -->
+
+          <mat-sidenav class="sidenav" position="end" opened="true" mode="side"
+                       fuseMatSidenavHelper="sms-user" matIsLockedOpen="gt-sm">
+            <!--<sms-user [userNumber]=numberInfo.phone [customerId]=customerId></sms-user>-->
+            <sms-user></sms-user>
+          </mat-sidenav>
+
+          <!-- / CONTENT -->
+
+        </mat-sidenav-container>
+
+      </div>
+      <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+  </div>
+<!--</div>-->

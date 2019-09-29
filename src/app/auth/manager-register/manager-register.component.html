@@ -1,0 +1,159 @@
+<div id="manager-register" fxLayout="column">
+
+  <div id="manager-register-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+    <div id="manager-register-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+      <div class="logo">
+        <img src="assets/images/logos/logo2.png">
+      </div>
+
+      <div class="title">CREATE AN ACCOUNT</div>
+      <div class="content-card">
+        <div class="content p-24" fusePerfectScrollbar>
+          <form name="managerRegisterForm" [formGroup]="managerRegisterForm" class="user w-100-p"
+                fxLayout="column" fxFlex>
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+              <div fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100" class="p-12" hidden>
+                <div fxLayoutAlign="center">
+                  <button mat-raised-button type="button"
+                          class="save-user-button"
+                          (click)="fileInput1.click()">
+                    <span>Upload Account Photo</span>
+                  </button>
+                </div>
+                <div fxLayoutAlign="center" class="p-24">
+                  <div style="width:250px;">
+                    <img *ngIf="avatar_url" class="profile-icon" style="width: 100%; height: 100%;" [src]="avatar_url"
+                         [alt]="'Photo'"/>
+                    <input hidden type="file" id="FileInput1" accept="image/*" (change)="selectAvatar($event, 1)"
+                           #fileInput1>
+                    <input type="hidden" name="fileHidden" formControlName="avatar"/>
+                  </div>
+                </div>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Name</mat-label>
+                  <input matInput placeholder="Name" name="username" formControlName="username" required>
+                  <mat-error>
+                    Name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Email</mat-label>
+                  <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                  <input name="email" formControlName="email" matInput type="email"
+                         placeholder="xxx@xxx.com" required>
+                  <mat-error *ngIf="managerRegisterForm.get('email').hasError('required')">
+                    Email is required
+                  </mat-error>
+                  <mat-error *ngIf="managerRegisterForm.get('email').hasError('email')">
+                    Please enter a valid email address
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Password</mat-label>
+                  <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                  <input name="password" type="password" formControlName="password" matInput>
+                  <mat-error>
+                    Password is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12">
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Password (Confirm)</mat-label>
+                  <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                  <input type="password" formControlName="passwordConfirm" matInput>
+                  <mat-error *ngIf="managerRegisterForm.get('passwordConfirm').hasError('required')">
+                    Password confirmation is required
+                  </mat-error>
+                  <mat-error *ngIf="!managerRegisterForm.get('passwordConfirm').hasError('required') &&
+                                               managerRegisterForm.get('passwordConfirm').hasError('passwordsNotMatching')">
+                    Passwords must match
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12" hidden>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Phone Number</mat-label>
+                  <input name="phone_number" formControlName="phone_number" placeholder="Phone Number"
+                         matInput>
+                  <mat-error>
+                    Phone Number is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12" hidden>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>SMS Bot Number</mat-label>
+                  <!--<mat-icon matSuffix class="secondary-text">account_circle</mat-icon>-->
+                  <input name="smsbot_number" formControlName="smsbot_number" placeholder="SMS Bot Number" matInput>
+                  <mat-error>
+                    SMS Bot Number is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12" hidden>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Store Name</mat-label>
+                  <!--<mat-icon matSuffix class="secondary-text">phone</mat-icon>-->
+                  <input name="store_name" formControlName="store_name" matInput placeholder="Store Name">
+                  <mat-error>
+                    Store Name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12" hidden>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                  <mat-label>Store Link</mat-label>
+                  <input name="store_link" formControlName="store_link" matInput
+                         placeholder="Store Link">
+                  <mat-error>
+                    Store Link is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="50" class="p-12" hidden>
+              </div>
+            </div>
+
+            <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
+                    [disabled]="managerRegisterForm.invalid" (click)="onSubmit()">
+              CREATE AN ACCOUNT
+            </button>
+
+            <div *ngIf="errorMsg" class="loginerror" fxLayout="row" fxLayout.xs="column"
+                 fxLayoutAlign="space-between center">
+              <mat-error style="margin:auto">
+                {{errorMsg}}
+              </mat-error>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="register" fxLayout="column" fxLayoutAlign="center center">
+        <span class="text">Already have an account?</span>
+        <a class="link" [routerLink]="'/auth/login'">Login</a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

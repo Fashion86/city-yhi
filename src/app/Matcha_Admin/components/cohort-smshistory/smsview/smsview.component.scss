@@ -1,0 +1,68 @@
+@import "src/@fuse/scss/fuse";
+
+#smsview {
+
+  .center {
+    padding: 32px !important;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    @include media-breakpoint('lt-lg') {
+      padding: 0 !important;
+    }
+
+    .content-card {
+      position: relative;
+      display: flex;
+      flex: 1;
+      border-radius: 8px;
+
+      .mat-sidenav-container {
+        display: flex;
+        flex: 1;
+        width: 100%;
+
+        > .mat-sidenav-content,
+        > .mat-drawer-content {
+          display: flex;
+          flex: 1 1 auto;
+          min-height: 100%;
+          height: auto;
+        }
+
+        > .mat-drawer-content {
+          max-width: 100%;
+        }
+
+        mat-sidenav {
+          display: flex;
+          flex-direction: column;
+          width: 300px;
+          max-width: 90%;
+          overflow: hidden;
+        }
+      }
+    }
+
+    .cohort-detail-container {
+      width: 100%;
+    }
+  }
+  .accent1 {
+    background-color: #ffffff !important;
+    color: black !important;
+  }
+  .mat-spinner-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff66;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+}

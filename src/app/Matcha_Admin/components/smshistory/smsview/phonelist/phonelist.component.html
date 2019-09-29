@@ -1,0 +1,86 @@
+<div
+  style="overflow-y: scroll; height: 100%;"
+  class="page-layout carded left-sidebar"
+>
+
+  <!-- CENTER -->
+  <div class="center" style="padding:10px !important;">
+    <div class="header accent1 p-16" fxLayout="column" fxLayoutAlign="start"
+         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <!-- SEARCH -->
+      <div fxLayout="row" fxLayoutAlign="center center" fxFlex>
+        <div class="search-wrapper mt-16 mt-sm-0">
+          <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon style="color: #039be5!important">search</mat-icon>
+            <input placeholder="PhoneNumber" (keydown)="searchNumber($event)">
+          </div>
+        </div>
+      </div>
+      <!-- / SEARCH -->
+    </div>
+    <!-- CONTENT CARD -->
+    <div class="content-card"  style="position:relative">
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8" style="z-index: 300;">
+        <h2 class="m-0">SMS Feed</h2>
+      </div>
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- Material Design Spinner -->
+      <div class="mat-spinner-wrapper" *ngIf="isLoading">
+        <mat-progress-spinner
+          class="example-margin"
+          mode="indeterminate"
+          color="primary">
+        </mat-progress-spinner>
+      </div>
+      <!-- / Material Design Spinner -->
+
+      <!-- CONTENT -->
+      <div class="content p-16" fusePerfectScrollbar>
+        <mat-table class="roles-table"
+                   #table [dataSource]="dataSource"
+                   matSort
+                   fusePerfectScrollbar
+                   infinite-scroll
+                   [infiniteScrollDistance]="scrollDistance"
+                   [infiniteScrollUpDistance]="scrollUpDistance"
+                   [infiniteScrollThrottle]="throttle"
+                   (scrolled)="onScrollDown()"
+                   (scrolledUp)="onUp()"
+                   [scrollWindow]="false"
+        >
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="phone">
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header >Phone</mat-header-cell>-->
+            <mat-cell *matCellDef="let number" :class="{{number?.support_sms&&number?.is_read===0?'red-300':''}}" style="display:block; padding-left: 10px; padding-right: 10px;">
+              <div style="display:flex; justify-content: space-between">
+                <p class="text-truncate" style="margin-top:5px; margin-bottom: 5px;">{{number.phone}}</p>
+                <p class="text-truncate" style="margin-top:5px; margin-bottom: 5px;">{{compareDate(yesterdayDate, number.last_sms_date) ? (number.last_sms_date | dateAgo) : (number.last_sms_date | date: 'y-MM-dd') }}</p>
+              </div>
+              <p class="text-truncate" style="margin-top:5px; margin-bottom: 5px;">{{number?.support_sms?number.support_sms:number.text}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!--<mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>-->
+
+          <mat-row *matRowDef="let number; columns: displayedColumns;"
+                   class="product"
+                   [ngClass]="{'grey-300': number.phone==selectedNumber}"
+                   [routerLink]="'/admin/smshistory/' + number.phone + '/detail'"
+                   [queryParams] = "{ customerId: number.orderInfo ? number.orderInfo.customerId:'' }">
+          </mat-row>
+
+        </mat-table>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,128 @@
+<!-- CHAT -->
+<div class="chat" fxFlex fxLayout="column" style="position:relative">
+
+  <!-- CHAT TOOLBAR -->
+  <mat-toolbar class="chat-toolbar" style="z-index: 300;">
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <!-- RESPONSIVE CHATS BUTTON-->
+        <button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"
+                fuseMatSidenavToggler="sms-user"
+                aria-label="chats button">
+          <mat-icon>chat</mat-icon>
+        </button>
+        <!-- / RESPONSIVE CHATS BUTTON-->
+
+        <!-- CHAT CONTACT-->
+        <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center">
+
+          <div class="avatar-wrapper">
+
+            <img src="/assets/images/avatars/profile.jpg"
+                 class="avatar"
+            />
+
+            <mat-icon class="s-16 status"
+                      ngClass="online">
+            </mat-icon>
+          </div>
+
+          <div class="chat-contact-name">
+            {{customerNumber}}
+          </div>
+
+        </div>
+        <!-- / CHAT CONTACT-->
+      </div>
+    </div>
+  </mat-toolbar>
+  <!-- / CHAT TOOLBAR -->
+
+  <!-- Material Design Spinner -->
+  <div class="mat-spinner-wrapper" *ngIf="isLoading">
+    <mat-progress-spinner
+      class="example-margin"
+      mode="indeterminate"
+      color="primary">
+    </mat-progress-spinner>
+  </div>
+  <!-- / Material Design Spinner -->
+
+  <!-- CHAT CONTENT -->
+  <div id="chat-content" fxFlex="1 1 auto"
+       fusePerfectScrollbar
+       infinite-scroll
+       [infiniteScrollDistance]="scrollDistance"
+       [infiniteScrollUpDistance]="scrollUpDistance"
+       [infiniteScrollThrottle]="throttle"
+       (scrolled)="onScrollDown()"
+       (scrolledUp)="onUp()"
+       [scrollWindow]="false"
+  >
+
+    <!-- CHAT MESSAGES -->
+    <div class="chat-messages" >
+
+      <div *ngIf="isEnd" style="text-align: center;">
+        <button mat-button color="accent">Load More</button>
+      </div>
+      <!-- MESSAGE -->
+      <div *ngFor="let message of smsList; let i = index" class="message-row"
+           [ngClass]="{
+             'me': message.from !== customerNumber,
+             'contact': message.from === customerNumber,
+             'first-of-group': true,
+             'last-of-group': isLastMessageOfGroup(message, i)
+           }">
+
+        <img *ngIf="shouldShowContactAvatar(message, i)"
+             src="/assets/images/avatars/profile.jpg"
+             class="avatar">
+
+        <div class="bubble">
+          <div class="message">{{message.body}}</div>
+          <div class="time secondary-text">{{message.date | dateAgo}} {{message.dashboardUser ? 'sent by ' + message.dashboardUser : ''}}</div>
+        </div>
+
+      </div>
+      <!-- / MESSAGE -->
+
+    </div>
+    <!-- CHAT MESSAGES -->
+
+  </div>
+  <!-- / CHAT CONTENT -->
+
+  <!-- CHAT FOOTER -->
+  <div class="chat-footer" fxFlex="0 0 auto" fxLayout="column">
+
+    <!-- REPLY FORM -->
+    <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
+
+      <form #replyForm="ngForm"
+            (ngSubmit)="reply($event)"
+            (keydown.enter)="reply($event)"
+            fxFlex fxLayout="row" fxLayoutAlign="start center">
+
+        <mat-form-field class="message-text" fxFlex floatLabel="never" appearance="standard">
+          <textarea matInput #replyInput placeholder="Type your message"
+                    ngModel name="message" [rows]="1" [matTextareaAutosize]="true"></textarea>
+        </mat-form-field>
+
+        <button class="send-message-button" mat-icon-button type="submit" aria-label="Send message">
+          <mat-icon class="secondary-text">send</mat-icon>
+        </button>
+
+      </form>
+
+    </div>
+    <!-- / REPLY FORM -->
+
+  </div>
+  <!-- / CHAT FOOTER-->
+
+</div>
+<!-- / CHAT -->

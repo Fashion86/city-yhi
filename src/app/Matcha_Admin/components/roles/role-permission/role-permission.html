@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button [disabled]="roleForm.invalid"
+            (click)="addRole()"
+            class="add-product-button fuse-white mt-24 mt-md-0">
+      <span *ngIf="!role.id">ADD</span>
+      <span *ngIf="role.id">SAVE</span>
+    </button>
+  </div>
+  <div class="">
+    <div class="content p-24" fusePerfectScrollbar>
+      <form name="roleForm" [formGroup]="roleForm" class="user w-100-p" fxLayout="column" fxFlex>
+        <div class="tab-content p-24" fusePerfectScrollbar>
+          <div fxLayout="row wrap" fxLayoutAlign="center">
+            <div fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100" class="p-12">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>Name</mat-label>
+                <input name="name" [(ngModel)]="role.name" formControlName="role_name" matInput required>
+                <mat-error>
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="content p-24" fusePerfectScrollbar>
+      <div fxLayout="row wrap" fxLayoutAlign="start">
+        <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33" class="p-12" *ngFor="let permission of permissions" >
+          <mat-checkbox [disabled]="!apiflag" [checked]="role.permission_ids.includes(permission.id)" [(ngModel)]="checkboxes[permission.id]" (change)="onSelectedChange(permission.id, $event)"
+                        (click)="$event.stopPropagation()">
+            {{permission.name}}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

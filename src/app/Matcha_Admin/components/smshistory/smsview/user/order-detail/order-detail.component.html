@@ -1,0 +1,28 @@
+<!-- SIDENAV CONTENT -->
+<div class="sidenav-content px-24" fxFlex >
+
+  <!-- USER MOOD -->
+  <div *ngIf="order?.orderNumber">
+    <div class="text-center">
+      <span class="font-size-36 text-bold">Order Detail</span>
+    </div><br>
+    <div>
+      <span class="text-center text-bold">Order Number: </span>
+      <span>{{order.orderNumber}}</span>
+    </div><br>
+    <div>
+      <span class="text-center text-bold">Order Date: </span>
+      <span>{{order.orderDate}}</span>
+    </div><br>
+    <div>
+      <p class="text-center text-bold">Product: </p>
+      <p *ngFor="let product of order.products; let i = index" class="text-center">{{product}}</p>
+    </div><br>
+    <div>
+      <span class="text-center text-bold">Cost: </span>
+      <span>{{order.cost}} {{order.currency}}</span>
+    </div>
+  </div>
+  <!-- / USER MOOD -->
+
+</div>
