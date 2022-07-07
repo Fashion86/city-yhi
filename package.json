@@ -71,7 +71,7 @@
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "0.2.2",
     "lodash": "4.17.11",
-    "moment": "2.23.0",
+    "moment": "2.29.4",
     "ng-snotify": "4.3.1",
     "ng2-charts": "1.6.0",
     "ngrx-store-freeze": "0.2.4",
